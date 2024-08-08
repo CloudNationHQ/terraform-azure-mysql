@@ -108,5 +108,5 @@ MIT Licensed. See [LICENSE](https://github.com/cloudnationhq/terraform-azure-mys
 
 ## Reference
 
-- [Documentation]()
-- [Rest Api]()
+- [Documentation](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/overview)
+- [Rest Api](https://learn.microsoft.com/en-us/rest/api/mysql/)
