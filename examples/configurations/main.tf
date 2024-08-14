@@ -40,7 +40,7 @@ module "kv" {
 }
 
 module "mysql" {
-  source  = "cloudnationhq/sql/azure"
+  source  = "cloudnationhq/mysql/azure"
   version = "~> 0.1"
 
   naming = local.naming
