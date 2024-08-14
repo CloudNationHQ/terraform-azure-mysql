@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v0.2.0...v0.2.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* fix wrong module references ([#8](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/8)) ([7ae0cba](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/7ae0cba010e0a2728df6d6fe7067f3f2e280e46a))
+
 ## [0.2.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v0.1.0...v0.2.0) (2024-08-08)
 
 
