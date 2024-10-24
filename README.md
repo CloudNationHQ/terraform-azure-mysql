@@ -31,66 +31,65 @@ End-to-end testing is not conducted on these modules, as they are individual com
 - ability to generate a user assigned identity or bring your own if specified.
 - flexible configuration of multiple server parameters
 
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.61 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.61 |
-
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 4.0 |
 
 ## Resources
 
 | Name | Type |
-| :-- | :-- |
-| [azurerm_mysql_flexible_server](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server) | resource |
-| [azurerm_mysql_flexible_database](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_database) | resource |
-| [azurerm_mysql_flexible_server_firewall_rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_firewall_rule) | resource |
-| [azurerm_mysql_flexible_server_configuration](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_configuration) | resource |
-| [azurerm_user_assigned_identity](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity) | resource |
+|------|------|
+| [azurerm_mysql_flexible_database.db](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_database) | resource |
+| [azurerm_mysql_flexible_server.sql](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server) | resource |
+| [azurerm_mysql_flexible_server_configuration.configs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_configuration) | resource |
+| [azurerm_mysql_flexible_server_firewall_rule.rules](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_firewall_rule) | resource |
+| [azurerm_user_assigned_identity.identity](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity) | resource |
 
 ## Inputs
 
-| Name | Description | Type | Required |
-| :-- | :-- | :-- | :-- |
-| `instance` | describes mysql flexible server related configuration | object | yes |
-| `naming` | used for naming purposes | string | yes |
-| `location` | default azure region tho be used | string | no |
-| `resource_group` | default resource group to be used | string | no |
-| `tags` | tags to be added to the resources | map(string) | no |
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_instance"></a> [instance](#input\_instance) | describes mysql flexible server related configuration | `any` | n/a | yes |
+| <a name="input_location"></a> [location](#input\_location) | default azure region to be used. | `string` | `null` | no |
+| <a name="input_naming"></a> [naming](#input\_naming) | used for naming purposes | `map(string)` | `{}` | no |
+| <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group) | default resource group to be used. | `string` | `null` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | tags to be added to the resources | `map(string)` | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
-| :-- | :-- |
-| `server` | describes mysql flexible server related configuration |
-| `databases` | contains databases |
+|------|-------------|
+| <a name="output_databases"></a> [databases](#output\_databases) | contains databases |
+| <a name="output_server"></a> [server](#output\_server) | describes mysql flexible server related configuration |
+<!-- END_TF_DOCS -->
 
 ## Testing
 
-As a prerequirement, please ensure that both go and terraform are properly installed on your system.
+Ensure go and terraform are installed.
 
-The [Makefile](Makefile) includes two distinct variations of tests. The first one is designed to deploy different usage scenarios of the module. These tests are executed by specifying the TF_PATH environment variable, which determines the different usages located in the example directory.
+Run tests for different usage scenarios by specifying the EXAMPLE environment variable. Usage examples are in the examples directory.
 
-To execute this test, input the command ```make test TF_PATH=default```, substituting default with the specific usage you wish to test.
+To execute a test, run `make test EXAMPLE=default`
 
-The second variation is known as a extended test. This one performs additional checks and can be executed without specifying any parameters, using the command ```make test_extended```.
-
-Both are designed to be executed locally and are also integrated into the github workflow.
-
-Each of these tests contributes to the robustness and resilience of the module. They ensure the module performs consistently and accurately under different scenarios and configurations.
+Replace default with the specific example you want to test. These tests ensure the module performs reliably across various configurations.
 
 ## Notes
 
-Using a dedicated module, we've developed a naming convention for resources that's based on specific regular expressions for each type, ensuring correct abbreviations and offering flexibility with multiple prefixes and suffixes
+Using a dedicated module, we've developed a naming convention for resources that's based on specific regular expressions for each type, ensuring correct abbreviations and offering flexibility with multiple prefixes and suffixes.
 
-Full examples detailing all usages, along with integrations with dependency modules, are located in the examples directory
+Full examples detailing all usages, along with integrations with dependency modules, are located in the examples directory.
+
+To update the module's documentation run `make doc`
 
 ## Authors
 
