@@ -5,7 +5,7 @@
 
 ### ⚠ BREAKING CHANGES
 
-* upgrade azurerm provider to v4 ([#15](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/15))
+* Version 4 of the azurerm provider includes breaking changes. The full list of changes can be found [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/4.0-upgrade-guide)
 
 ### Features
 
@@ -13,6 +13,9 @@
 * **deps:** bump github.com/gruntwork-io/terratest in /tests ([#13](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/13)) ([30fb05f](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/30fb05fbaa1833b422f83745e70adb1c89a0044c))
 * upgrade azurerm provider to v4 ([#15](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/15)) ([b72456e](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/b72456eebce033166825719756626da9cae202ff))
 
+### Upgrade from v0.2.1 to v1.0.0:
+
+- Update module reference to: `version = "~> 1.0"`
 ## [0.2.1](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v0.2.0...v0.2.1) (2024-08-14)
 
 
