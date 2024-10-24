@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v0.2.1...v1.0.0) (2024-10-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade azurerm provider to v4 ([#15](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/15))
+
+### Features
+
+* add question template ([#10](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/10)) ([b734ae0](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/b734ae0d8a3d559a9b2485b3b37c9ea362d9ce96))
+* **deps:** bump github.com/gruntwork-io/terratest in /tests ([#13](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/13)) ([30fb05f](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/30fb05fbaa1833b422f83745e70adb1c89a0044c))
+* upgrade azurerm provider to v4 ([#15](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/15)) ([b72456e](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/b72456eebce033166825719756626da9cae202ff))
+
 ## [0.2.1](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v0.2.0...v0.2.1) (2024-08-14)
 
 
