@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v1.1.0...v1.2.0) (2025-01-20)
+
+
+### Features
+
+* **deps:** bump github.com/gruntwork-io/terratest in /tests ([#19](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/19)) ([1371d58](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/1371d5838390cd202964b296b84a15bc6994020f))
+* **deps:** bump golang.org/x/crypto from 0.29.0 to 0.31.0 in /tests ([#22](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/22)) ([a70c1d7](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/a70c1d7873cd822af27f08b496e514a00dabaf45))
+* **deps:** bump golang.org/x/net from 0.31.0 to 0.33.0 in /tests ([#23](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/23)) ([29998d1](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/29998d1a5c9c3e1af66cb2dbee998750bd084f99))
+* remove temporary files when deployment tests fails ([#20](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/20)) ([9072f3f](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/9072f3f3bfc5143b6c3d60d91bde33251020d3c1))
+
 ## [1.1.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v1.0.0...v1.1.0) (2024-11-12)
 
 
