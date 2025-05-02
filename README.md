@@ -190,7 +190,7 @@ For more information, please see our contribution [guidelines](./CONTRIBUTING.md
 
 MIT Licensed. See [LICENSE](https://github.com/cloudnationhq/terraform-azure-mysql/blob/main/LICENSE) for full details.
 
-## Reference
+## References
 
 - [Documentation](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/overview)
 - [Rest Api](https://learn.microsoft.com/en-us/rest/api/mysql/)
