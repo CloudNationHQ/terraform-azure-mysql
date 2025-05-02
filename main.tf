@@ -1,6 +1,5 @@
 # mysql server
 resource "azurerm_mysql_flexible_server" "sql" {
-
   resource_group_name = coalesce(
     lookup(
       var.instance, "resource_group_name", null
@@ -26,6 +25,9 @@ resource "azurerm_mysql_flexible_server" "sql" {
   zone                              = var.instance.zone
   administrator_login               = var.instance.administrator_login
   administrator_password            = var.instance.administrator_password
+  administrator_password_wo         = var.instance.administrator_password_wo
+  administrator_password_wo_version = var.instance.administrator_password_wo_version
+  public_network_access             = var.instance.public_network_access
 
   tags = try(coalesce(
     var.instance.tags, var.tags), null
@@ -44,10 +46,11 @@ resource "azurerm_mysql_flexible_server" "sql" {
     for_each = try(var.instance.storage, null) != null ? { "default" = var.instance.storage } : {}
 
     content {
-      iops               = storage.value.iops
-      size_gb            = storage.value.size_gb
-      auto_grow_enabled  = storage.value.auto_grow_enabled
-      io_scaling_enabled = storage.value.io_scaling_enabled
+      iops                = storage.value.iops
+      size_gb             = storage.value.size_gb
+      auto_grow_enabled   = storage.value.auto_grow_enabled
+      io_scaling_enabled  = storage.value.io_scaling_enabled
+      log_on_disk_enabled = storage.value.log_on_disk_enabled
     }
   }
 
