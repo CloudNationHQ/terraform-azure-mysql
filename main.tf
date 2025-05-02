@@ -1,32 +1,42 @@
 # mysql server
 resource "azurerm_mysql_flexible_server" "sql" {
+
+  resource_group_name = coalesce(
+    lookup(
+      var.instance, "resource_group_name", null
+    ), var.resource_group_name
+  )
+
+  location = coalesce(
+    lookup(var.instance, "location", null
+    ), var.location
+  )
+
   name                              = var.instance.name
-  resource_group_name               = coalesce(lookup(var.instance, "resource_group", null), var.resource_group)
-  location                          = coalesce(lookup(var.instance, "location", null), var.location)
-  backup_retention_days             = try(var.instance.backup_retention_days, 7)
-  create_mode                       = try(var.instance.create_mode, "Default")
-  delegated_subnet_id               = try(var.instance.delegated_subnet_id, null)
-  geo_redundant_backup_enabled      = try(var.instance.geo_redundant_backup_enabled, false)
-  point_in_time_restore_time_in_utc = try(var.instance.point_in_time_restore_time_in_utc, null)
-  private_dns_zone_id               = try(var.instance.private_dns_zone_id, null)
-  replication_role                  = try(var.instance.replication_role, null)
-  sku_name                          = try(var.instance.sku_name, "GP_Standard_D8ds_v4")
-  source_server_id                  = try(var.instance.source_server_id, null)
-  version                           = try(var.instance.version, "5.7")
-  zone                              = try(var.instance.zone, null)
-  administrator_login               = try(var.instance.administrator_login, "adminLogin")
+  backup_retention_days             = var.instance.backup_retention_days
+  create_mode                       = var.instance.create_mode
+  delegated_subnet_id               = var.instance.delegated_subnet_id
+  geo_redundant_backup_enabled      = var.instance.geo_redundant_backup_enabled
+  point_in_time_restore_time_in_utc = var.instance.point_in_time_restore_time_in_utc
+  private_dns_zone_id               = var.instance.private_dns_zone_id
+  replication_role                  = var.instance.replication_role
+  sku_name                          = var.instance.sku_name
+  source_server_id                  = var.instance.source_server_id
+  version                           = var.instance.version
+  zone                              = var.instance.zone
+  administrator_login               = var.instance.administrator_login
   administrator_password            = var.instance.administrator_password
-  tags                              = try(var.instance.tags, var.tags, null)
+
+  tags = try(coalesce(
+    var.instance.tags, var.tags), null
+  )
 
   dynamic "identity" {
-    for_each = lookup(var.instance, "identity", null) != null ? [lookup(var.instance, "identity", {})] : []
+    for_each = lookup(var.instance, "identity", null) != null ? [var.instance.identity] : []
+
     content {
-      type = "UserAssigned"
-      identity_ids = lookup(
-        identity.value, "identity_ids", null
-        ) != null ? identity.value.identity_ids : [
-        for uai in azurerm_user_assigned_identity.identity : uai.id
-      ]
+      type         = identity.value.type
+      identity_ids = identity.value.identity_ids
     }
   }
 
@@ -34,10 +44,10 @@ resource "azurerm_mysql_flexible_server" "sql" {
     for_each = try(var.instance.storage, null) != null ? { "default" = var.instance.storage } : {}
 
     content {
-      iops               = try(storage.value.iops, null)
-      size_gb            = try(storage.value.size_gb, null)
-      auto_grow_enabled  = try(storage.value.auto_grow_enabled, true)
-      io_scaling_enabled = try(storage.value.io_scaling_enabled, false)
+      iops               = storage.value.iops
+      size_gb            = storage.value.size_gb
+      auto_grow_enabled  = storage.value.auto_grow_enabled
+      io_scaling_enabled = storage.value.io_scaling_enabled
     }
   }
 
@@ -46,7 +56,7 @@ resource "azurerm_mysql_flexible_server" "sql" {
 
     content {
       mode                      = high_availability.value.mode
-      standby_availability_zone = try(high_availability.value.standby_availability_zone, null)
+      standby_availability_zone = high_availability.value.standby_availability_zone
     }
   }
 
@@ -54,9 +64,9 @@ resource "azurerm_mysql_flexible_server" "sql" {
     for_each = try(var.instance.maintenance_window, null) != null ? { "default" = var.instance.maintenance_window } : {}
 
     content {
-      start_hour   = try(maintenance_window.value.start_hour, null)
-      start_minute = try(maintenance_window.value.start_minute, null)
-      day_of_week  = try(maintenance_window.value.day_of_week, null)
+      start_hour   = maintenance_window.value.start_hour
+      start_minute = maintenance_window.value.start_minute
+      day_of_week  = maintenance_window.value.day_of_week
     }
   }
 
@@ -64,59 +74,63 @@ resource "azurerm_mysql_flexible_server" "sql" {
     for_each = try(var.instance.customer_managed_key, null) != null ? { "default" = var.instance.customer_managed_key } : {}
 
     content {
-      key_vault_key_id                     = try(customer_managed_key.value.key_vault_key_id, null)
-      geo_backup_key_vault_key_id          = try(customer_managed_key.value.geo_backup_key_vault_key_id, null)
-      primary_user_assigned_identity_id    = try(customer_managed_key.value.primary_user_assigned_identity_id, null)
-      geo_backup_user_assigned_identity_id = try(customer_managed_key.value.geo_backup_user_assigned_identity_id, null)
+      key_vault_key_id                     = customer_managed_key.value.key_vault_key_id
+      geo_backup_key_vault_key_id          = customer_managed_key.value.geo_backup_key_vault_key_id
+      primary_user_assigned_identity_id    = customer_managed_key.value.primary_user_assigned_identity_id
+      geo_backup_user_assigned_identity_id = customer_managed_key.value.geo_backup_user_assigned_identity_id
     }
   }
 }
 
 # databases
 resource "azurerm_mysql_flexible_database" "db" {
-  for_each = lookup(
-    var.instance, "databases", null
-  ) != null ? var.instance.databases : {}
+  for_each = lookup(var.instance, "databases", null) != null ? var.instance.databases : {}
 
-  name                = try(each.value.name, join("-", [var.naming.mysql_database, each.key]))
-  resource_group_name = coalesce(lookup(var.instance, "resource_group", null), var.resource_group)
-  server_name         = azurerm_mysql_flexible_server.sql.name
-  collation           = each.value.collation
-  charset             = each.value.charset
+  resource_group_name = coalesce(
+    lookup(
+      var.instance, "resource_group_name", null
+    ), var.resource_group_name
+  )
+
+  name = coalesce(
+    each.value.name, join("-", [var.naming.mysql_database, each.key])
+  )
+
+  server_name = azurerm_mysql_flexible_server.sql.name
+  collation   = each.value.collation
+  charset     = each.value.charset
 }
 
 # firewall rules
 resource "azurerm_mysql_flexible_server_firewall_rule" "rules" {
-  for_each = lookup(
-    var.instance, "firewall_rules", null
-  ) != null ? var.instance.firewall_rules : {}
+  for_each = lookup(var.instance, "firewall_rules", null) != null ? var.instance.firewall_rules : {}
 
-  name                = try(each.value.name, join("-", [var.naming.mysql_firewall_rule, each.key]))
-  resource_group_name = coalesce(lookup(var.instance, "resource_group", null), var.resource_group)
-  server_name         = azurerm_mysql_flexible_server.sql.name
-  start_ip_address    = each.value.start_ip_address
-  end_ip_address      = each.value.end_ip_address
+  resource_group_name = coalesce(
+    lookup(
+      var.instance, "resource_group_name", null
+    ), var.resource_group_name
+  )
+
+  name = coalesce(
+    each.value.name, join("-", [var.naming.mysql_firewall_rule, each.key])
+  )
+
+  server_name      = azurerm_mysql_flexible_server.sql.name
+  start_ip_address = each.value.start_ip_address
+  end_ip_address   = each.value.end_ip_address
 }
 
 # configurations
 resource "azurerm_mysql_flexible_server_configuration" "configs" {
-  for_each = lookup(
-    var.instance, "configurations", null
-  ) != null ? var.instance.configurations : {}
+  for_each = lookup(var.instance, "configurations", null) != null ? var.instance.configurations : {}
 
-  name                = each.value.name
-  resource_group_name = coalesce(lookup(var.instance, "resource_group", null), var.resource_group)
-  server_name         = azurerm_mysql_flexible_server.sql.name
-  value               = each.value.value
-}
+  resource_group_name = coalesce(
+    lookup(
+      var.instance, "resource_group_name", null
+    ), var.resource_group_name
+  )
 
-resource "azurerm_user_assigned_identity" "identity" {
-  for_each = lookup(var.instance, "identity", null) != null ? (
-    lookup(var.instance.identity, "identity_ids", null) == null ? { "identity" = var.instance.identity } : {}
-  ) : {}
-
-  name                = lookup(each.value, "name", "uai-${var.instance.name}")
-  location            = coalesce(lookup(each.value, "location", null), var.instance.location)
-  resource_group_name = coalesce(lookup(each.value, "resource_group", null), var.instance.resource_group)
-  tags                = try(var.instance.tags, var.tags, null)
+  name        = each.value.name
+  server_name = azurerm_mysql_flexible_server.sql.name
+  value       = each.value.value
 }

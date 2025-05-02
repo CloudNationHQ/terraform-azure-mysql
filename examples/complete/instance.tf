@@ -1,8 +1,8 @@
 locals {
   instance = {
-    name                   = module.naming.mysql_server.name
+    name                   = module.naming.mysql_server.name_unique
     location               = module.rg.groups.demo.location
-    resource_group         = module.rg.groups.demo.name
+    resource_group_name    = module.rg.groups.demo.name
     administrator_password = module.kv.secrets.db.value
     zone                   = "1"
 
@@ -22,7 +22,8 @@ locals {
     }
 
     identity = {
-      type = "UserAssigned"
+      type         = "UserAssigned"
+      identity_ids = [module.identity.config.id]
     }
 
     maintenance_window = {

@@ -19,7 +19,7 @@ module "rg" {
 
 module "kv" {
   source  = "cloudnationhq/kv/azure"
-  version = "~> 2.0"
+  version = "~> 3.0"
 
   naming = local.naming
 
@@ -41,14 +41,14 @@ module "kv" {
 
 module "mysql" {
   source  = "cloudnationhq/mysql/azure"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   naming = local.naming
 
   instance = {
-    name                   = module.naming.mysql_server.name
+    name                   = module.naming.mysql_server.name_unique
     location               = module.rg.groups.demo.location
-    resource_group         = module.rg.groups.demo.name
+    resource_group_name    = module.rg.groups.demo.name
     administrator_password = module.kv.secrets.db.value
     zone                   = "1"
 
