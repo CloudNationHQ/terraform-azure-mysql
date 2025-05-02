@@ -17,16 +17,20 @@ variable "instance" {
     zone                              = optional(string, null)
     administrator_login               = optional(string, "adminLogin")
     administrator_password            = optional(string, null)
+    administrator_password_wo         = optional(string, null)
+    administrator_password_wo_version = optional(number, null)
+    public_network_access             = optional(string, "Enabled")
     tags                              = optional(map(string))
     identity = optional(object({
       type         = string
       identity_ids = optional(list(string), null)
     }), null)
     storage = optional(object({
-      iops               = optional(number, null)
-      size_gb            = optional(number, null)
-      auto_grow_enabled  = optional(bool, true)
-      io_scaling_enabled = optional(bool, false)
+      iops                = optional(number, null)
+      size_gb             = optional(number, null)
+      auto_grow_enabled   = optional(bool, true)
+      io_scaling_enabled  = optional(bool, false)
+      log_on_disk_enabled = optional(bool, false)
     }), null)
     high_availability = optional(object({
       mode                      = string
