@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v1.2.0...v2.0.0) (2025-05-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* The data structure changed, causing a recreate on existing resources.
+
+### Features
+
+* add type definitions and small refactor ([#29](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/29)) ([251c641](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/251c6419ac8389b235893dd4ca419c3f002b02f0))
+
 ## [1.2.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v1.1.0...v1.2.0) (2025-01-20)
 
 
