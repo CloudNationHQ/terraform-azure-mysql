@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.0.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v1.2.0...v2.0.0) (2025-05-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* The data structure changed, causing a recreate on existing resources.
+
+### Features
+
+* add type definitions and small refactor ([#29](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/29)) ([251c641](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/251c6419ac8389b235893dd4ca419c3f002b02f0))
+
+### Upgrade from v1.2.0 to v2.0.0:
+
+- Update module reference to: `version = "~> 2.0"`
+- The user assigned identity is removed from the module.
+  - For identity we created a separate module as shown in the examples.
+- The property and variable resource_group is renamed to resource_group_name
+
 ## [1.2.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v1.1.0...v1.2.0) (2025-01-20)
 
 
