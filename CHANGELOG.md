@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.0.0...v3.1.0) (2025-05-07)
+
+
+### Features
+
+* replace deployment test code with module consumption and fix tags property idempotence ([#33](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/33)) ([47549e9](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/47549e90d87a02112dd2e90f363365a7a4c4e8c1))
+
 ## [3.0.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v2.0.0...v3.0.0) (2025-05-02)
 
 
