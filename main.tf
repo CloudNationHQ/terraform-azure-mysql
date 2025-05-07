@@ -29,8 +29,8 @@ resource "azurerm_mysql_flexible_server" "sql" {
   administrator_password_wo_version = var.instance.administrator_password_wo_version
   public_network_access             = var.instance.public_network_access
 
-  tags = try(coalesce(
-    var.instance.tags, var.tags), null
+  tags = coalesce(
+    var.instance.tags, var.tags
   )
 
   dynamic "identity" {
