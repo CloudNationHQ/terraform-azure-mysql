@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.1](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.1.0...v3.1.1) (2025-06-05)
+
+
+### Bug Fixes
+
+* Change default values for create_mode and version ([#37](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/37)) ([0748e96](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/0748e96c2570f7d936529e5eeaaef018ef272503))
+
 ## [3.1.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.0.0...v3.1.0) (2025-05-07)
 
 
