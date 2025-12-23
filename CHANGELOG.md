@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.2.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.1.1...v3.2.0) (2025-12-23)
+
+
+### Features
+
+* **deps:** bump github.com/cloudnationhq/az-cn-go-validor in /tests ([#49](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/49)) ([a72e20c](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/a72e20c274d2af036e10e00b71be3eac16dec155))
+* **deps:** bump github.com/ulikunitz/xz from 0.5.10 to 0.5.14 in /tests ([#41](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/41)) ([2cddd8e](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/2cddd8ebdcac55a0e6157735faa0f71bf92e1dc2))
+* **deps:** bump golang.org/x/crypto from 0.36.0 to 0.45.0 in /tests ([#48](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/48)) ([172f098](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/172f098af5276d97303cc169c687dc68e50986bc))
+* remove redundant null values, increment version module usage and added new examples ([#52](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/52)) ([569023f](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/569023ffe35c5dd782a0c5f0e62201b25bdd5a30))
+
 ## [3.1.1](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.1.0...v3.1.1) (2025-06-05)
 
 
