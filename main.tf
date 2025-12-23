@@ -81,6 +81,7 @@ resource "azurerm_mysql_flexible_server" "sql" {
       geo_backup_key_vault_key_id          = customer_managed_key.value.geo_backup_key_vault_key_id
       primary_user_assigned_identity_id    = customer_managed_key.value.primary_user_assigned_identity_id
       geo_backup_user_assigned_identity_id = customer_managed_key.value.geo_backup_user_assigned_identity_id
+      managed_hsm_key_id                   = customer_managed_key.value.managed_hsm_key_id
     }
   }
 }
