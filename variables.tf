@@ -2,58 +2,59 @@ variable "instance" {
   description = "Contains all mysql flexible server configuration"
   type = object({
     name                              = string
-    resource_group_name               = optional(string, null)
-    location                          = optional(string, null)
+    resource_group_name               = optional(string)
+    location                          = optional(string)
     backup_retention_days             = optional(number, 7)
-    create_mode                       = optional(string, null)
-    delegated_subnet_id               = optional(string, null)
+    create_mode                       = optional(string)
+    delegated_subnet_id               = optional(string)
     geo_redundant_backup_enabled      = optional(bool, false)
-    point_in_time_restore_time_in_utc = optional(string, null)
-    private_dns_zone_id               = optional(string, null)
-    replication_role                  = optional(string, null)
+    point_in_time_restore_time_in_utc = optional(string)
+    private_dns_zone_id               = optional(string)
+    replication_role                  = optional(string)
     sku_name                          = optional(string, "GP_Standard_D8ds_v4")
-    source_server_id                  = optional(string, null)
+    source_server_id                  = optional(string)
     version                           = optional(string, "8.0.21")
-    zone                              = optional(string, null)
+    zone                              = optional(string)
     administrator_login               = optional(string, "adminLogin")
-    administrator_password            = optional(string, null)
-    administrator_password_wo         = optional(string, null)
-    administrator_password_wo_version = optional(number, null)
+    administrator_password            = optional(string)
+    administrator_password_wo         = optional(string)
+    administrator_password_wo_version = optional(number)
     public_network_access             = optional(string, "Enabled")
     tags                              = optional(map(string))
     identity = optional(object({
       type         = string
-      identity_ids = optional(list(string), null)
+      identity_ids = optional(list(string))
     }), null)
     storage = optional(object({
-      iops                = optional(number, null)
-      size_gb             = optional(number, null)
+      iops                = optional(number)
+      size_gb             = optional(number)
       auto_grow_enabled   = optional(bool, true)
       io_scaling_enabled  = optional(bool, false)
       log_on_disk_enabled = optional(bool, false)
     }), null)
     high_availability = optional(object({
       mode                      = string
-      standby_availability_zone = optional(string, null)
+      standby_availability_zone = optional(string)
     }), null)
     maintenance_window = optional(object({
-      start_hour   = optional(number, null)
-      start_minute = optional(number, null)
-      day_of_week  = optional(number, null)
+      start_hour   = optional(number)
+      start_minute = optional(number)
+      day_of_week  = optional(number)
     }), null)
     customer_managed_key = optional(object({
-      key_vault_key_id                     = optional(string, null)
-      geo_backup_key_vault_key_id          = optional(string, null)
-      primary_user_assigned_identity_id    = optional(string, null)
-      geo_backup_user_assigned_identity_id = optional(string, null)
+      key_vault_key_id                     = optional(string)
+      geo_backup_key_vault_key_id          = optional(string)
+      primary_user_assigned_identity_id    = optional(string)
+      geo_backup_user_assigned_identity_id = optional(string)
+      managed_hsm_key_id                   = optional(string)
     }), null)
     databases = optional(map(object({
-      name      = optional(string, null)
+      name      = optional(string)
       collation = string
       charset   = string
     })), {})
     firewall_rules = optional(map(object({
-      name             = optional(string, null)
+      name             = optional(string)
       start_ip_address = string
       end_ip_address   = string
     })), {})
