@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.2.0...v3.3.0) (2026-01-26)
+
+
+### Features
+
+* rename private networking example ([#54](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/54)) ([dd6737e](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/dd6737ecdd12805fa9b031822ee57c6b2f4509cd))
+
 ## [3.2.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.1.1...v3.2.0) (2025-12-23)
 
 
