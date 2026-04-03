@@ -156,9 +156,17 @@ Default: `{}`
 
 The following outputs are exported:
 
+### <a name="output_configurations"></a> [configurations](#output\_configurations)
+
+Description: Contains all mysql flexible server configurations
+
 ### <a name="output_databases"></a> [databases](#output\_databases)
 
 Description: Contains all mysql flexible server databases
+
+### <a name="output_firewall_rules"></a> [firewall\_rules](#output\_firewall\_rules)
+
+Description: Contains all mysql flexible server firewall rules
 
 ### <a name="output_instance"></a> [instance](#output\_instance)
 
