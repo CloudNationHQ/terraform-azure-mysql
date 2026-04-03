@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.3.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.2.0...v3.3.0) (2026-04-03)
+
+
+### Features
+
+* add missing outputs ([#59](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/59)) ([1269ef2](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/1269ef2609a52870be882b77e7a8bada9ea7c8e9))
+* **deps:** bump github.com/cloudnationhq/az-cn-go-validor in /tests ([#56](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/56)) ([c2d2526](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/c2d25261601cdf92a20bf988f9d64d9baaab2c26))
+* **deps:** bump github.com/cloudnationhq/az-cn-go-validor in /tests ([#58](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/58)) ([b55d2fc](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/b55d2fc6c2ee5a0a03d512efb18be405155d81ef))
+* rename private networking example ([#54](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/54)) ([dd6737e](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/dd6737ecdd12805fa9b031822ee57c6b2f4509cd))
+
 ## [3.2.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.1.1...v3.2.0) (2025-12-23)
 
 
