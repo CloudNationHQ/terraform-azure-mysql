@@ -62,6 +62,13 @@ variable "instance" {
       name  = string
       value = string
     })), {})
+    ad_admin = optional(object({
+      login        = string
+      object_id    = string
+      tenant_id    = optional(string)
+      identity_id  = string
+      principal_id = string
+    }))
   })
 
   validation {
