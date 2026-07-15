@@ -124,6 +124,39 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "rules" {
   end_ip_address   = each.value.end_ip_address
 }
 
+data "azurerm_client_config" "current" {}
+
+## In order to set an Active Directory Admin, you need to assign the Directory Readers role to the user assigned managed identity of the MySQL Flexible Server.
+resource "azuread_directory_role" "reader" {
+  for_each     = try(var.instance.ad_admin, null) != null ? { "default" = {} } : {}
+  display_name = "Directory Readers"
+}
+
+resource "azuread_directory_role_assignment" "role" {
+  for_each            = try(var.instance.ad_admin, null) != null ? { "default" = {} } : {}
+  role_id             = azuread_directory_role.reader["default"].template_id
+  principal_object_id = var.instance.ad_admin.principal_id
+}
+
+resource "time_sleep" "wait_after_directory_role_assignment" {
+  for_each = try(var.instance.ad_admin, null) != null ? { "default" = {} } : {}
+
+  depends_on      = [azuread_directory_role_assignment.role]
+  create_duration = "10s"
+}
+
+resource "azurerm_mysql_flexible_server_active_directory_administrator" "sql" {
+  for_each = try(var.instance.ad_admin, null) != null ? { "default" = {} } : {}
+
+  server_id   = azurerm_mysql_flexible_server.sql.id
+  identity_id = var.instance.ad_admin.identity_id
+  login       = var.instance.ad_admin.login
+  object_id   = var.instance.ad_admin.object_id
+  tenant_id   = coalesce(try(var.instance.ad_admin.tenant_id, null), data.azurerm_client_config.current.tenant_id)
+
+  depends_on = [time_sleep.wait_after_directory_role_assignment]
+}
+
 # configurations
 resource "azurerm_mysql_flexible_server_configuration" "configs" {
   for_each = lookup(var.instance, "configurations", null) != null ? var.instance.configurations : {}
