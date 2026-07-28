@@ -48,7 +48,7 @@ resource "azurerm_user_assigned_identity" "mysql" {
 module "mysql" {
   source  = "cloudnationhq/mysql/azure"
   version = "~> 3.0"
-
+  
   naming = local.naming
 
   instance = {
