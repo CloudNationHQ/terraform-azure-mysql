@@ -51,6 +51,9 @@ The following resources are used by this module:
 - [azurerm_mysql_flexible_server_configuration.configs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_configuration) (resource)
 - [azurerm_mysql_flexible_server_firewall_rule.rules](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_firewall_rule) (resource)
 - [time_sleep.wait_after_directory_role_assignment](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) (resource)
+- [azuread_group.db_admin](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group) (data source)
+- [azuread_service_principal.db_admin](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) (data source)
+- [azuread_user.db_admin](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/user) (data source)
 - [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 
 ## Required Inputs
@@ -126,6 +129,14 @@ object({
       name  = string
       value = string
     })), {})
+    ad_admin = optional(object({
+      login        = string
+      object_id    = optional(string)
+      object_type  = optional(string, "ServicePrincipal")
+      tenant_id    = optional(string)
+      identity_id  = string
+      principal_id = string
+    }))
   })
 ```
 

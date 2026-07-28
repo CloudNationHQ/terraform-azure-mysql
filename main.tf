@@ -1,3 +1,21 @@
+data "azuread_user" "db_admin" {
+  for_each = try(var.instance.ad_admin.object_type, null) == "User" && try(var.instance.ad_admin.object_id, null) == null ? { "default" = {} } : {}
+
+  user_principal_name = var.instance.ad_admin.login
+}
+
+data "azuread_group" "db_admin" {
+  for_each = try(var.instance.ad_admin.object_type, null) == "Group" && try(var.instance.ad_admin.object_id, null) == null ? { "default" = {} } : {}
+
+  display_name = var.instance.ad_admin.login
+}
+
+data "azuread_service_principal" "db_admin" {
+  for_each = try(var.instance.ad_admin.object_type, null) == "ServicePrincipal" && try(var.instance.ad_admin.object_id, null) == null ? { "default" = {} } : {}
+
+  display_name = var.instance.ad_admin.login
+}
+
 # mysql server
 resource "azurerm_mysql_flexible_server" "sql" {
   resource_group_name = coalesce(
@@ -128,31 +146,36 @@ data "azurerm_client_config" "current" {}
 
 ## In order to set an Active Directory Admin, you need to assign the Directory Readers role to the user assigned managed identity of the MySQL Flexible Server.
 resource "azuread_directory_role" "reader" {
-  for_each     = try(var.instance.ad_admin, null) != null ? { "default" = {} } : {}
+  for_each     = try(var.instance.ad_admin.login, null) != null ? { "default" = {} } : {}
   display_name = "Directory Readers"
 }
 
 resource "azuread_directory_role_assignment" "role" {
-  for_each            = try(var.instance.ad_admin, null) != null ? { "default" = {} } : {}
+  for_each            = try(var.instance.ad_admin.login, null) != null ? { "default" = {} } : {}
   role_id             = azuread_directory_role.reader["default"].template_id
   principal_object_id = var.instance.ad_admin.principal_id
 }
 
 resource "time_sleep" "wait_after_directory_role_assignment" {
-  for_each = try(var.instance.ad_admin, null) != null ? { "default" = {} } : {}
+  for_each = try(var.instance.ad_admin.login, null) != null ? { "default" = {} } : {}
 
   depends_on      = [azuread_directory_role_assignment.role]
   create_duration = "10s"
 }
 
 resource "azurerm_mysql_flexible_server_active_directory_administrator" "sql" {
-  for_each = try(var.instance.ad_admin, null) != null ? { "default" = {} } : {}
+  for_each = try(var.instance.ad_admin.login, null) != null ? { "default" = {} } : {}
 
   server_id   = azurerm_mysql_flexible_server.sql.id
   identity_id = var.instance.ad_admin.identity_id
   login       = var.instance.ad_admin.login
-  object_id   = var.instance.ad_admin.object_id
-  tenant_id   = coalesce(try(var.instance.ad_admin.tenant_id, null), data.azurerm_client_config.current.tenant_id)
+  object_id = coalesce(
+    try(var.instance.ad_admin.object_id, null),
+    try(data.azuread_user.db_admin["default"].object_id, null),
+    try(data.azuread_group.db_admin["default"].object_id, null),
+    try(data.azuread_service_principal.db_admin["default"].object_id, null),
+  )
+  tenant_id = coalesce(try(var.instance.ad_admin.tenant_id, null), data.azurerm_client_config.current.tenant_id)
 
   depends_on = [time_sleep.wait_after_directory_role_assignment]
 }
