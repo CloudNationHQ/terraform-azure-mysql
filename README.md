@@ -23,11 +23,15 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.0)
 
+- <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) (~> 3.0)
+
 - <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.0)
 
 ## Providers
 
 The following providers are used by this module:
+
+- <a name="provider_azuread"></a> [azuread](#provider\_azuread) (~> 3.0)
 
 - <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~> 4.0)
 
@@ -37,8 +41,13 @@ The following resources are used by this module:
 
 - [azurerm_mysql_flexible_database.db](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_database) (resource)
 - [azurerm_mysql_flexible_server.sql](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server) (resource)
+- [azurerm_mysql_flexible_server_active_directory_administrator.sql](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_active_directory_administrator) (resource)
 - [azurerm_mysql_flexible_server_configuration.configs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_configuration) (resource)
 - [azurerm_mysql_flexible_server_firewall_rule.rules](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_firewall_rule) (resource)
+- [azuread_group.db_admin](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group) (data source)
+- [azuread_service_principal.db_admin](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) (data source)
+- [azuread_user.db_admin](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/user) (data source)
+- [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 
 ## Required Inputs
 
@@ -113,6 +122,14 @@ object({
       name  = string
       value = string
     })), {})
+    ad_admin = optional(object({
+      login        = string
+      object_id    = optional(string)
+      object_type  = optional(string, "ServicePrincipal")
+      tenant_id    = optional(string)
+      identity_id  = string
+      principal_id = string
+    }))
   })
 ```
 

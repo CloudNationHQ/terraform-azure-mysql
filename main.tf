@@ -1,3 +1,21 @@
+data "azuread_user" "db_admin" {
+  for_each = try(var.instance.ad_admin.object_type, null) == "User" && try(var.instance.ad_admin.object_id, null) == null ? { "default" = {} } : {}
+
+  user_principal_name = var.instance.ad_admin.login
+}
+
+data "azuread_group" "db_admin" {
+  for_each = try(var.instance.ad_admin.object_type, null) == "Group" && try(var.instance.ad_admin.object_id, null) == null ? { "default" = {} } : {}
+
+  display_name = var.instance.ad_admin.login
+}
+
+data "azuread_service_principal" "db_admin" {
+  for_each = try(var.instance.ad_admin.object_type, null) == "ServicePrincipal" && try(var.instance.ad_admin.object_id, null) == null ? { "default" = {} } : {}
+
+  display_name = var.instance.ad_admin.login
+}
+
 # mysql server
 resource "azurerm_mysql_flexible_server" "sql" {
   resource_group_name = coalesce(
@@ -122,6 +140,23 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "rules" {
   server_name      = azurerm_mysql_flexible_server.sql.name
   start_ip_address = each.value.start_ip_address
   end_ip_address   = each.value.end_ip_address
+}
+
+data "azurerm_client_config" "current" {}
+
+resource "azurerm_mysql_flexible_server_active_directory_administrator" "sql" {
+  for_each = try(var.instance.ad_admin.login, null) != null ? { "default" = {} } : {}
+
+  server_id   = azurerm_mysql_flexible_server.sql.id
+  identity_id = var.instance.ad_admin.identity_id
+  login       = var.instance.ad_admin.login
+  object_id = coalesce(
+    try(var.instance.ad_admin.object_id, null),
+    try(data.azuread_user.db_admin["default"].object_id, null),
+    try(data.azuread_group.db_admin["default"].object_id, null),
+    try(data.azuread_service_principal.db_admin["default"].object_id, null),
+  )
+  tenant_id = coalesce(try(var.instance.ad_admin.tenant_id, null), data.azurerm_client_config.current.tenant_id)
 }
 
 # configurations

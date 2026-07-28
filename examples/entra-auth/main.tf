@@ -45,12 +45,10 @@ resource "azurerm_user_assigned_identity" "mysql" {
   resource_group_name = module.rg.groups.demo.name
 }
 
-data "azurerm_client_config" "current" {}
-
 module "mysql" {
   source  = "cloudnationhq/mysql/azure"
   version = "~> 3.0"
-
+  
   naming = local.naming
 
   instance = {
@@ -65,15 +63,10 @@ module "mysql" {
     }
 
     ad_admin = {
-      login        = "entra-admin"
-      object_id    = data.azurerm_client_config.current.object_id
-      object_type  = "ServicePrincipal"
+      login        = "db-administrators"
+      object_type  = "Group"
       identity_id  = azurerm_user_assigned_identity.mysql.id
       principal_id = azurerm_user_assigned_identity.mysql.principal_id
-    }
-
-    databases = {
-      app = {}
     }
   }
 }

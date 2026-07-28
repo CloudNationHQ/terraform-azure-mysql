@@ -62,11 +62,27 @@ variable "instance" {
       name  = string
       value = string
     })), {})
+    ad_admin = optional(object({
+      login        = string
+      object_id    = optional(string)
+      object_type  = optional(string, "ServicePrincipal")
+      tenant_id    = optional(string)
+      identity_id  = string
+      principal_id = string
+    }))
   })
 
   validation {
     condition     = var.instance.location != null || var.location != null
     error_message = "Location must be provided either in the instance object or as a separate variable."
+  }
+
+  validation {
+    condition = var.instance.ad_admin == null ? true : contains(
+      ["User", "Group", "ServicePrincipal"],
+      var.instance.ad_admin.object_type
+    )
+    error_message = "ad_admin.object_type must be one of: User, Group, ServicePrincipal."
   }
 
   validation {
