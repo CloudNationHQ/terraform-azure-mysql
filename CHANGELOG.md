@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.0.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.3.0...v4.0.0) (2026-09-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* this change causes recreates
+
+### Features
+
+* azurerm provider 5 upgrade ([#65](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/65)) ([fe96df6](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/fe96df697ba7d2dd521e9546ee7f9fc4651b26c9))
+* **deps:** bump golang.org/x/crypto from 0.45.0 to 0.52.0 in /tests ([#62](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/62)) ([b9403de](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/b9403dea85d5f450d0be70d2640a5bb65bce9d67))
+
 ## [3.3.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.2.0...v3.3.0) (2026-04-03)
 
 
