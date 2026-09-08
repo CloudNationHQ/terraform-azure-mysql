@@ -1,13 +1,13 @@
 module "naming" {
   source  = "cloudnationhq/naming/azure"
-  version = "~> 0.26"
+  version = "~> 0.32"
 
   suffix = ["demo", "dev"]
 }
 
 module "rg" {
   source  = "cloudnationhq/rg/azure"
-  version = "~> 2.0"
+  version = "~> 3.0"
 
   groups = {
     demo = {
@@ -19,9 +19,7 @@ module "rg" {
 
 module "kv" {
   source  = "cloudnationhq/kv/azure"
-  version = "~> 4.0"
-
-  naming = local.naming
+  version = "~> 6.0"
 
   vault = {
     name                = module.naming.key_vault.name_unique
@@ -41,15 +39,16 @@ module "kv" {
 
 module "mysql" {
   source  = "cloudnationhq/mysql/azure"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
-  naming = local.naming
-
-  instance = {
+  mysql_flexible_server = {
     name                   = module.naming.mysql_server.name_unique
     location               = module.rg.groups.demo.location
     resource_group_name    = module.rg.groups.demo.name
     administrator_password = module.kv.secrets.db.value
+    administrator_login    = "adminLogin"
+    sku_name               = "GP_Standard_D8ds_v4"
+    version                = "8.0.21"
 
     configurations = {
       slow_query_log = {
