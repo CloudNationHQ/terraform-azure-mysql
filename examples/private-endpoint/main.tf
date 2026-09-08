@@ -1,13 +1,13 @@
 module "naming" {
   source  = "cloudnationhq/naming/azure"
-  version = "~> 0.26"
+  version = "~> 0.32"
 
   suffix = ["demo", "dev"]
 }
 
 module "rg" {
   source  = "cloudnationhq/rg/azure"
-  version = "~> 2.0"
+  version = "~> 3.0"
 
   groups = {
     demo = {
@@ -19,9 +19,8 @@ module "rg" {
 
 module "network" {
   source  = "cloudnationhq/vnet/azure"
-  version = "~> 9.0"
+  version = "~> 10.0"
 
-  naming = local.naming
 
   vnet = {
     name                = module.naming.virtual_network.name
@@ -47,7 +46,7 @@ module "network" {
 
 module "private_dns" {
   source  = "cloudnationhq/pdns/azure"
-  version = "~> 4.0"
+  version = "~> 5.0"
 
   resource_group_name = module.rg.groups.demo.name
 
@@ -68,9 +67,8 @@ module "private_dns" {
 
 module "kv" {
   source  = "cloudnationhq/kv/azure"
-  version = "~> 4.0"
+  version = "~> 6.0"
 
-  naming = local.naming
 
   vault = {
     name                = module.naming.key_vault.name_unique
@@ -90,15 +88,16 @@ module "kv" {
 
 module "mysql" {
   source  = "cloudnationhq/mysql/azure"
-  version = "~> 3.0"
+  version = "~> 4.0"
 
-  naming = local.naming
-
-  instance = {
+  mysql_flexible_server = {
     name                   = module.naming.mysql_server.name_unique
     location               = module.rg.groups.demo.location
     resource_group_name    = module.rg.groups.demo.name
     administrator_password = module.kv.secrets.db.value
+    administrator_login    = "adminLogin"
+    sku_name               = "GP_Standard_D8ds_v4"
+    version                = "8.0.21"
     delegated_subnet_id    = module.network.subnets.mysql.id
     private_dns_zone_id    = module.private_dns.private_zones.mysql.id
     public_network_access  = "Disabled"

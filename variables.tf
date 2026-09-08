@@ -1,25 +1,25 @@
-variable "instance" {
+variable "mysql_flexible_server" {
   description = "Contains all mysql flexible server configuration"
   type = object({
     name                              = string
     resource_group_name               = optional(string)
     location                          = optional(string)
-    backup_retention_days             = optional(number, 7)
+    backup_retention_days             = optional(number)
     create_mode                       = optional(string)
     delegated_subnet_id               = optional(string)
-    geo_redundant_backup_enabled      = optional(bool, false)
+    geo_redundant_backup_enabled      = optional(bool)
     point_in_time_restore_time_in_utc = optional(string)
     private_dns_zone_id               = optional(string)
     replication_role                  = optional(string)
-    sku_name                          = optional(string, "GP_Standard_D8ds_v4")
+    sku_name                          = optional(string)
     source_server_id                  = optional(string)
-    version                           = optional(string, "8.0.21")
+    version                           = optional(string)
     zone                              = optional(string)
-    administrator_login               = optional(string, "adminLogin")
+    administrator_login               = optional(string)
     administrator_password            = optional(string)
     administrator_password_wo         = optional(string)
     administrator_password_wo_version = optional(number)
-    public_network_access             = optional(string, "Enabled")
+    public_network_access             = optional(string)
     tags                              = optional(map(string))
     identity = optional(object({
       type         = string
@@ -28,9 +28,9 @@ variable "instance" {
     storage = optional(object({
       iops                = optional(number)
       size_gb             = optional(number)
-      auto_grow_enabled   = optional(bool, true)
-      io_scaling_enabled  = optional(bool, false)
-      log_on_disk_enabled = optional(bool, false)
+      auto_grow_enabled   = optional(bool)
+      io_scaling_enabled  = optional(bool)
+      log_on_disk_enabled = optional(bool)
     }), null)
     high_availability = optional(object({
       mode                      = string
@@ -46,7 +46,6 @@ variable "instance" {
       geo_backup_key_vault_key_id          = optional(string)
       primary_user_assigned_identity_id    = optional(string)
       geo_backup_user_assigned_identity_id = optional(string)
-      managed_hsm_key_id                   = optional(string)
     }), null)
     databases = optional(map(object({
       name      = optional(string)
@@ -65,21 +64,16 @@ variable "instance" {
   })
 
   validation {
-    condition     = var.instance.location != null || var.location != null
+    condition     = var.mysql_flexible_server.location != null || var.location != null
     error_message = "Location must be provided either in the instance object or as a separate variable."
   }
 
   validation {
-    condition     = var.instance.resource_group_name != null || var.resource_group_name != null
+    condition     = var.mysql_flexible_server.resource_group_name != null || var.resource_group_name != null
     error_message = "Resource group name must be provided either in the instance object or as a separate variable."
   }
 }
 
-variable "naming" {
-  description = "used for naming purposes"
-  type        = map(string)
-  default     = {}
-}
 
 variable "location" {
   description = "default azure region to be used."

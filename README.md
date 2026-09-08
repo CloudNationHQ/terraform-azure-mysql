@@ -23,28 +23,28 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.0)
 
-- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 4.0)
+- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 5.0)
 
 ## Providers
 
 The following providers are used by this module:
 
-- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~> 4.0)
+- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (5.4.0)
 
 ## Resources
 
 The following resources are used by this module:
 
-- [azurerm_mysql_flexible_database.db](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_database) (resource)
-- [azurerm_mysql_flexible_server.sql](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server) (resource)
-- [azurerm_mysql_flexible_server_configuration.configs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_configuration) (resource)
-- [azurerm_mysql_flexible_server_firewall_rule.rules](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_firewall_rule) (resource)
+- [azurerm_mysql_flexible_database.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_database) (resource)
+- [azurerm_mysql_flexible_server.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server) (resource)
+- [azurerm_mysql_flexible_server_configuration.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_configuration) (resource)
+- [azurerm_mysql_flexible_server_firewall_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_firewall_rule) (resource)
 
 ## Required Inputs
 
 The following input variables are required:
 
-### <a name="input_instance"></a> [instance](#input\_instance)
+### <a name="input_mysql_flexible_server"></a> [mysql\_flexible\_server](#input\_mysql\_flexible\_server)
 
 Description: Contains all mysql flexible server configuration
 
@@ -55,22 +55,22 @@ object({
     name                              = string
     resource_group_name               = optional(string)
     location                          = optional(string)
-    backup_retention_days             = optional(number, 7)
+    backup_retention_days             = optional(number)
     create_mode                       = optional(string)
     delegated_subnet_id               = optional(string)
-    geo_redundant_backup_enabled      = optional(bool, false)
+    geo_redundant_backup_enabled      = optional(bool)
     point_in_time_restore_time_in_utc = optional(string)
     private_dns_zone_id               = optional(string)
     replication_role                  = optional(string)
-    sku_name                          = optional(string, "GP_Standard_D8ds_v4")
+    sku_name                          = optional(string)
     source_server_id                  = optional(string)
-    version                           = optional(string, "8.0.21")
+    version                           = optional(string)
     zone                              = optional(string)
-    administrator_login               = optional(string, "adminLogin")
+    administrator_login               = optional(string)
     administrator_password            = optional(string)
     administrator_password_wo         = optional(string)
     administrator_password_wo_version = optional(number)
-    public_network_access             = optional(string, "Enabled")
+    public_network_access             = optional(string)
     tags                              = optional(map(string))
     identity = optional(object({
       type         = string
@@ -79,9 +79,9 @@ object({
     storage = optional(object({
       iops                = optional(number)
       size_gb             = optional(number)
-      auto_grow_enabled   = optional(bool, true)
-      io_scaling_enabled  = optional(bool, false)
-      log_on_disk_enabled = optional(bool, false)
+      auto_grow_enabled   = optional(bool)
+      io_scaling_enabled  = optional(bool)
+      log_on_disk_enabled = optional(bool)
     }), null)
     high_availability = optional(object({
       mode                      = string
@@ -97,7 +97,6 @@ object({
       geo_backup_key_vault_key_id          = optional(string)
       primary_user_assigned_identity_id    = optional(string)
       geo_backup_user_assigned_identity_id = optional(string)
-      managed_hsm_key_id                   = optional(string)
     }), null)
     databases = optional(map(object({
       name      = optional(string)
@@ -127,14 +126,6 @@ Description: default azure region to be used.
 Type: `string`
 
 Default: `null`
-
-### <a name="input_naming"></a> [naming](#input\_naming)
-
-Description: used for naming purposes
-
-Type: `map(string)`
-
-Default: `{}`
 
 ### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
 
@@ -168,7 +159,7 @@ Description: Contains all mysql flexible server databases
 
 Description: Contains all mysql flexible server firewall rules
 
-### <a name="output_instance"></a> [instance](#output\_instance)
+### <a name="output_mysql_flexible_server"></a> [mysql\_flexible\_server](#output\_mysql\_flexible\_server)
 
 Description: Contains all mysql flexible server configuration
 <!-- END_TF_DOCS -->
@@ -193,11 +184,7 @@ To update the module's documentation run `make doc`
 
 We welcome contributions from the community! Whether it's reporting a bug, suggesting a new feature, or submitting a pull request, your input is highly valued.
 
-For more information, please see our contribution [guidelines](./CONTRIBUTING.md). <br><br>
-
-<a href="https://github.com/cloudnationhq/terraform-azure-mysql/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=cloudnationhq/terraform-azure-mysql" />
-</a>
+For more information, please see our contribution [guidelines](./CONTRIBUTING.md).
 
 ## License
 
