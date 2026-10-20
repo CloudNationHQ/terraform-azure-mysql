@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v4.0.0...v4.1.0) (2026-10-20)
+
+
+### Features
+
+* **deps:** bump github.com/klauspost/compress in /tests ([#66](https://github.com/CloudNationHQ/terraform-azure-mysql/issues/66)) ([dcf2208](https://github.com/CloudNationHQ/terraform-azure-mysql/commit/dcf220887836c6b28e47630e482e1249ad3c9a8d))
+
 ## [4.0.0](https://github.com/CloudNationHQ/terraform-azure-mysql/compare/v3.3.0...v4.0.0) (2026-09-08)
 
 
